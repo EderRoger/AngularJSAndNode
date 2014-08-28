@@ -16,7 +16,8 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "start": "http-server -a 0.0.0.0 -p 8000"
+    "start": "http-server -a 0.0.0.0 -p 8000",
+    "start2": "node server"
   },
   "dependencies": {
     "socket.io": "^1.0.6"

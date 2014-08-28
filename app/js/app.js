@@ -4,6 +4,8 @@
 
 var phonecatApp = angular.module('angularNodeApp', [
   'ngRoute',
+  'btford.socket-io',
+  'socketio',
   'angularNodeControllers',
   'angularNodeServices'
 ]);
