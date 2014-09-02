@@ -20,6 +20,7 @@
     "start2": "node server"
   },
   "dependencies": {
-    "socket.io": "^1.0.6"
+    "socket.io": "^1.0.6",
+    "express": "~4.2.0"
   }
 }

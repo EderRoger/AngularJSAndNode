@@ -1,24 +1,44 @@
 var http = require('http');
+var url = require('url');
+var server;
+
 
 var requestListener = function (req, res) {
   res.writeHead(200);
-  res.end('Hello, World!\n');
+  res.end('<h1>Hello! Try the <a href="/#/tela1">Tela 1</a></h1>!');
 }
 
-var server = http.createServer(requestListener);
+server = http.createServer(requestListener);
+
+server.listen(8001, function(){
+	console.log('On air');
+});
 
 // use socket.io
 var io = require('socket.io').listen(server);
 
+// define interactions with client
 io.sockets.on('connection', function(socket){
-
-    //Enviando dados para o client
-    setInterval(function(){
-        socket.emit('date', {'date': new Date()});
-    }, 1000);
     
-});
+    setInterval(function () {
+     socket.emit('send:time', { time: (new Date()).toString()
+     });
+    }, 1000);	
 
-server.listen(8000, function(){
-   console.log("AngularJSandNode no ar.");
+    //recieve client data
+    socket.on('client_data', function(data){
+        process.stdout.write(data.letter);
+    });
+    //receive the bonita calls
+    socket.on('url_data', function(data){
+        //emit to angular listen function
+        console.log('Received message from client!',data.value);
+        sendDataToReload(data.value);        
+    });
+
+    sendDataToReload = function(data){
+      console.log('emit message to client!',data);
+      //socket.emit('reload_notification',{'url': data});
+      socket.broadcast.to("bonita_room").emit('reload_notification',{'url': data});
+    };
 });

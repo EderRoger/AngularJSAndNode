@@ -2,8 +2,7 @@
 
 /* Services */
 
-var angularNodeServices = angular.module('angularNodeServices', []);
-
-angularNodeServices.factory('mySocket', function (socketFactory) {
-  return socketFactory();
-});
+angular.module('angularNodeServices', []).
+  factory('socket', function (socketFactory) {
+    return socketFactory();
+  }).value('version', '0.1');
